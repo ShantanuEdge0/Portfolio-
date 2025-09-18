@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShantanuEdge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg-1: #0D0D0D;
+            --dark-bg-2: #121212;
+            --electric-blue: #00F5FF;
+            --neon-green: #00FF9D;
+            --soft-purple: #A78BFA;
+            --text-light: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg-1) 0%, var(--dark-bg-2) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .background-circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.2;
+            animation: float 15s infinite linear;
+            will-change: transform;
+        }
+
+        .circle-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--electric-blue);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--neon-green);
+            top: 50%;
+            right: 5%;
+            animation-delay: -5s;
+        }
+
+        .circle-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--soft-purple);
+            bottom: 10%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, 30px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 60px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-20px, 30px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Section divider styling */
+        .section-divider {
+            height: 2px;
+            width: 80px;
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-green));
+            margin: 15px auto 30px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--electric-blue);
+            animation: pulse 2s infinite;
+        }
+
+        .section-divider::before {
+            left: 20%;
+        }
+
+        .section-divider::after {
+            right: 20%;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Glassmorphism effect */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 90px;
+            width: auto;
+            margin-right: 10px;
+            border-radius: 5px;
+            object-fit: contain;
+            max-width: 100%;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 70%;
+            height: 100vh;
+            flex-direction: column;
+            padding: 50px 20px;
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-links.active {
+            left: 0;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 15px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:not(.cta-button):hover {
+            color: var(--electric-blue);
+            padding-left: 25px;
+        }
+
+        .nav-links a:not(.cta-button)::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--electric-blue);
+            transition: var(--transition);
+        }
+
+        .nav-links a:not(.cta-button):hover::before {
+            width: 15px;
+        }
+
+        .hamburger {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background: var(--text-light);
+            margin: 3px 0;
+            transition: var(--transition);
+            transform-origin: center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--electric-blue), transparent);
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-green));
+            color: var(--dark-bg-1);
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+            transition: var(--transition);
+            transform: translateY(0);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.7);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .thumbnail-previews {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .thumbnail {
+            width: 250px;
+            height: 140px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            animation: float-thumbnail 6s infinite ease-in-out;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+
+        .thumbnail:nth-child(1) {
+            background-image: url('image9.png');
+            animation-delay: 0s;
+        }
+
+        .thumbnail:nth-child(2) {
+            background-image: url('image6.png');
+            animation-delay: -2s;
+        }
+
+        .thumbnail:nth-child(3) {
+            background-image: url('image4.png');
+            animation-delay: -4s;
+        }
+
+        .thumbnail:nth-child(4) {
+            background-image: url('image8.png');
+            animation-delay: -6s;
+        }
+
+        @keyframes float-thumbnail {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        .trust-badges::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+        }
+
+        .trust-badges p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .platform-scroll-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        .platform-scroll-track {
+            display: flex;
+            width: 200%;
+            animation: scroll 20s linear infinite;
+            will-change: transform;
+        }
+
+        .platform-scroll-track:hover {
+            animation-play-state: paused;
+        }
+
+        .platform-logos {
+            display: flex;
+            justify-content: space-around;
+            width: 50%;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .platform {
+            font-size: 2.5rem;
+            margin: 0 20px;
+            color: #555;
+            transition: color 0.3s ease;
+        }
+
+        .platform:hover {
+            color: var(--electric-blue);
+        }
+
+        /* Services */
+        .services {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--soft-purple), transparent);
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            padding: 25px 20px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 255, 157, 0.1));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* Portfolio */
+        .portfolio {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--electric-blue), transparent);
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            border-radius: 50px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-tab.active, .filter-tab:hover {
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-green));
+            color: var(--dark-bg-1);
+            border-color: transparent;
+        }
+
+        /* Masonry Grid Layout */
+        .masonry-grid {
+            column-count: 2;
+            column-gap: 15px;
+        }
+
+        .portfolio-item {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+            break-inside: avoid;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(45deg, #333, #555);
+            transform: translateZ(0);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+            transform: translateZ(0);
+        }
+
+        .portfolio-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-item-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .view-project {
+            padding: 10px 20px;
+            background: var(--text-light);
+            color: var(--dark-bg-1);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            transform: translateY(20px);
+        }
+
+        .portfolio-item:hover .view-project {
+            transform: translateY(0);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+        }
+
+        .testimonial-wrapper {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        .testimonial-cards {
+            display: flex;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+            will-change: transform;
+        }
+
+        .testimonial-card {
+            flex: 0 0 auto;
+            width: 340px;
+            margin-right: 10px;
+            padding: 25px;
+        }
+
+        .testimonial-cards:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-350px * 3 - 20px * 3));
+            }
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--electric-blue), var(--neon-green));
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .client-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .client-details p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .stars {
+            color: gold;
+            margin-bottom: 15px;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .faq::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--soft-purple), transparent);
+        }
+
+        .accordion {
+            margin-top: 30px;
+        }
+
+        .accordion-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            border-left: 1px solid var(--glass-border);
+            border-right: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .accordion-content.active {
+            max-height: 300px;
+            padding: 20px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--electric-blue), transparent);
+        }
+
+        .cta-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 30px;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .footer-brand .logo {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand p {
+            color: var(--text-gray);
+            max-width: 300px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--electric-blue);
+        }
+
+        .footer-column a {
+            display: block;
+            color: var(--text-gray);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: var(--transition);
+            position: relative;
+            padding-left: 0;
+        }
+
+        .footer-column a::before {
+            content: '›';
+            position: absolute;
+            left: -15px;
+            opacity: 0;
+            transition: var(--transition);
+            color: var(--electric-blue);
+        }
+
+        .footer-column a:hover {
+            color: var(--electric-blue);
+            padding-left: 15px;
+        }
+
+        .footer-column a:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(90deg, var(--electric-blue), var(--neon-green));
+            color: var(--dark-bg-1);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--electric-blue), var(--neon-green));
+            color: var(--dark-bg-1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 99;
+            box-shadow: 0 2px 20px rgba(0, 245, 255, 0.5);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(0, 245, 255, 0.7);
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .masonry-grid {
+                column-count: 3;
+            }
+            
+            .testimonial-card {
+                flex: 0 0 calc(50% - 20px);
+            }
+            
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .nav-links {
+                position: static;
+                height: auto;
+                width: auto;
+                flex-direction: row;
+                padding: 0;
+                display: flex;
+                background: transparent;
+                backdrop-filter: none;
+                border: none;
+            }
+            
+            .nav-links a {
+                border: none;
+                padding: 10px 15px;
+                margin: 0 5px;
+            }
+            
+            .navbar {
+                padding: 15px 30px;
+            }
+            
+            .testimonial-card {
+                flex: 0 0 calc(33.333% - 20px);
+            }
+
+            .hamburger {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .masonry-grid {
+                column-count: 1;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .footer-column {
+                min-width: 100%;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .thumbnail {
+                width: 160px;
+                height: 90px;
+            }
+
+            .testimonial-card {
+                width: 300px;
+            }
+
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Performance optimizations */
+        .performance-optimized {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar glass">
+                <a href="#" class="logo">
+                    <img src="image11.png" alt="ShantanuEdge Logo">
+                </a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <div class="nav-links glass">
+                    <a href="#services">Services</a>
+                    <a href="#portfolio">Portfolio</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact" class="cta-button">Contact Us</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Turn Scrollers Into Viewers — Instantly</h1>
+            <p>Professional YouTube thumbnail designs that grab attention and drive clicks. Elevate your channel with our premium design studio.</p>
+            <a href="https://t.me/raza_visuals" class="cta-button">Get Started Now</a>
+            
+            <div class="thumbnail-previews">
+                <div class="thumbnail"></div>
+                <div class="thumbnail"></div>
+                <div class="thumbnail"></div>
+                <div class="thumbnail"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="trust-badges">
+        <div class="container" align="center">
+            <b><p>Chosen by Creators Who've Grown Millions of Views</p></b>
+            <br>
+            <div class="platform-scroll-container">
+                <div class="platform-scroll-track">
+                    <div class="platform-logos">
+                        <i class="fab fa-youtube platform"></i>
+                        <i class="fab fa-instagram platform"></i>
+                        <i class="fab fa-tiktok platform"></i>
+                        <i class="fab fa-twitch platform"></i>
+                        <i class="fab fa-facebook platform"></i>
+                    </div>
+                    <!-- Duplicate for seamless looping -->
+                    <div class="platform-logos">
+                        <i class="fab fa-youtube platform"></i>
+                        <i class="fab fa-instagram platform"></i>
+                        <i class="fab fa-tiktok platform"></i>
+                        <i class="fab fa-twitch platform"></i>
+                        <i class="fab fa-facebook platform"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="section-divider"></div>
+            <div class="services-grid">
+                <div class="service-card glass">
+                    <div class="service-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="service-title">Thumbnail Design</h3>
+                    <p class="service-desc">Eye-catching thumbnails that increase your CTR and views.</p>
+                </div>
+                
+                <div class="service-card glass">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="service-title">Channel Branding</h3>
+                    <p class="service-desc">Consistent branding across your channel for recognition.</p>
+                </div>
+                
+                <div class="service-card glass">
+                    <div class="service-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3 class="service-title">Shorts Covers</h3>
+                    <p class="service-desc">Engaging covers for your YouTube Shorts content.</p>
+                </div>
+                
+                <div class="service-card glass">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">CTR Optimization</h3>
+                    <p class="service-desc">Data-driven designs optimized for maximum click-through rate.</p>
+                </div>
+                
+                <div class="service-card glass">
+                    <div class="service-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <h3 class="service-title">Video Ads</h3>
+                    <p class="service-desc">Attention-grabbing thumbnails for your video advertisements.</p>
+                </div>
+                
+                <div class="service-card glass">
+                    <div class="service-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="service-title">24hr Delivery</h3>
+                    <p class="service-desc">Quick turnaround without compromising on quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Our Portfolio</h2>
+            <div class="section-divider"></div>
+            <div class="masonry-grid">
+                <div class="portfolio-item">
+                    <img src="image5.jpg" alt="Portfolio Item 1">
+                </div>
+                <div class="portfolio-item">
+                    <img src="image3.png" alt="Portfolio Item 2">
+                </div>
+                <div class="portfolio-item">
+                    <img src="image1.png" alt="Portfolio Item 3">
+                </div>
+                <div class="portfolio-item">
+                    <img src="image7.png" alt="Portfolio Item 4">
+                </div>
+                <div class="portfolio-item">
+                    <img src="image2.png" alt="Portfolio Item 5">
+                </div>
+                <div class="portfolio-item">
+                    <img src="image10.png" alt="Portfolio Item 6">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Clients Say?</h2>
+            <div class="section-divider"></div>
+            
+            <div class="testimonial-wrapper">
+                <div class="testimonial-cards">
+                    <div class="testimonial-card glass">
+                        <div class="client-info">
+                            <div class="client-avatar">JD</div>
+                            <div class="client-details">
+                                <h4>John Doe</h4>
+                                <p>Finance channel</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"After switching to ShantanuEdge's thumbnails, my click-throughs skyrocketed by 45%. It feels like viewers can't resist clicking now!"</p>
+                    </div>
+                    
+                    <div class="testimonial-card glass">
+                        <div class="client-info">
+                            <div class="client-avatar">JS</div>
+                            <div class="client-details">
+                                <h4>Jane Smith</h4>
+                                <p>Documentary channel</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"The designs are incredible and the delivery was super fast. My audience loves the new thumbnails!"</p>
+                    </div>
+                    
+                    <div class="testimonial-card glass">
+                        <div class="client-info">
+                            <div class="client-avatar">MJ</div>
+                            <div class="client-details">
+                                <h4>Mike Johnson</h4>
+                                <p>Vlogging channel</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>"Professional service with amazing results. My views have increased significantly since switching to ShantanuEdge."</p>
+                    </div>
+                    
+                    <!-- Duplicate cards for seamless looping -->
+                    <div class="testimonial-card glass">
+                        <div class="client-info">
+                            <div class="client-avatar">RC</div>
+                            <div class="client-details">
+                                <h4>Ryan Carter</h4>
+                                <p>YOUTUBE COACH</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Working with ShantanuEdge was a total game-changer. The thumbnails looked so polished that my videos finally stood out — and my students keep asking who does my designs!"</p>
+                    </div>
+                    
+                    <div class="testimonial-card glass">
+                        <div class="client-info">
+                            <div class="client-avatar">DR</div>
+                            <div class="client-details">
+                                <h4>David R</h4>
+                                <p>FITNESS CREATOR</p>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>" didn’t expect such a quick turnaround AND designs this sharp. Posting them boosted my clicks right away, and even old subscribers messaged me saying the new look feels pro."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="section-divider"></div>
+            
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        How long does it take to receive my thumbnails? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>We offer 24-hour delivery for all standard thumbnail packages. Rush delivery options are also available for an additional fee if you need your thumbnails urgently.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        What information do you need to create my thumbnails? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>We'll need your video title, any specific elements you want included, your preferred style, and brand colors if you have them.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Do you offer revisions? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Yes, we offer up to 2 rounds of revisions for each thumbnail to ensure you're completely satisfied with the final design.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Can you match my existing channel branding? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Absolutely! We'll study your channel's existing style and create thumbnails that perfectly match your branding.</p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        What formats do you deliver? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>We deliver all thumbnails in high-resolution PNG format, optimized for YouTube's specifications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2>Let's Unlock Your Channel's Full Potential</h2>
+            <p>Secure your slot today and start publishing with thumbnails that drive views — not guesses.</p>
+            <a href="https://t.me/raza_visuals" class="cta-button">Contact Us Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">Raza Visual</div>
+                    <p>Your videos deserve to be seen. I craft thumbnails that grab attention, spark curiosity, and turn casual viewers into loyal subscribers.</p>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://t.me/raza_visuals" class="social-icon">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="mailto:razaashraf96398@gmail.com" class="social-icon">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Services</h4>
+                        <a href="#">Thumbnail Design</a>
+                        <a href="#">Channel Branding</a>
+                        <a href="#">Shorts Covers</a>
+                        <a href="#">CTR Optimization</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#">About Us</a>
+                        <a href="#">Portfolio</a>
+                        <a href="#">Testimonials</a>
+                        <a href="#">Contact</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="#">FAQ</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Refund Policy</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Raza Visual. All rights reserved. | WhatsApp: +91 62014 64745</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile nav when clicking on links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // FAQ Accordion
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                content.classList.toggle('active');
+                
+                const icon = header.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+        
+        // Portfolio Filter
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                filterTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Here you would normally filter the portfolio items
+                // For this example, we'll just simulate it
+            });
+        });
+        
+        // Scroll to top button
+        const scrollToTopBtn = document.querySelector('.scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Performance optimization - use requestAnimationFrame for animations
+        function optimizeAnimations() {
+            document.querySelectorAll('*').forEach(el => {
+                const style = window.getComputedStyle(el);
+                if (style.animation !== 'none 0s ease 0s 1 normal none running') {
+                    el.classList.add('performance-optimized');
+                }
+            });
+        }
+        
+        // Initialize optimizations
+        window.addEventListener('load', optimizeAnimations);
+    </script>
+</body>
+</html>
